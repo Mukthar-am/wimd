@@ -17,6 +17,7 @@ public class RepositoryTests {
             System.out.println("instance not null");
         }
         Map<Integer, Driver> drivers = goJekDrivers.getDriverListing();
+        System.out.println("Size=" + drivers.size());
 
         //goJekDrivers.getCapacity()
         for (int i = 1; i <= 5; i++) {

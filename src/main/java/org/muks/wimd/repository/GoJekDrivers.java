@@ -5,9 +5,7 @@ import org.muks.wimd.dao.transportation.Driver;
 import org.muks.wimd.dao.transportation.Segments;
 import org.muks.wimd.dao.transportation.Vehicle;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,10 +23,19 @@ public class GoJekDrivers {
 
     private static GoJekDrivers instance = null;
 
-    public GoJekDrivers getInstance() {
-        if (instance == null) {
 
+    public static GoJekDrivers getInstance() {
+        if (instance == null) {
             instance = new GoJekDrivers();
+            instance.init();
+        }
+
+        return instance;
+    }
+
+
+    public void init() {
+        if (DRIVER_LISTING.size() == 0) {
 
             for (int i = 1; i <= CAPACITY; i++) {
 
@@ -46,14 +53,9 @@ public class GoJekDrivers {
                     vehicle = new Car("Mercedes", "C-Class", "White", ("KA-01 HA" + i), Segments.LUXURY);
 
                 this.DRIVER_LISTING.put(i, new Driver(i, "Driver # " + i, vehicle));
-                System.out.println(DRIVER_LISTING.toString());
             }
 
-        } else {
-            return instance;
         }
-
-        return instance;
     }
 
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.ipr
 *.iws
 .idea
@@ -18,3 +19,17 @@ target
 ./.project
 *.iml
 *.log
+=======
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+>>>>>>> 235667f325af07b883d37d720c508a520582a1dc

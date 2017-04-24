@@ -1,4 +1,4 @@
-package com.muks.loadtests;
+package org.muks.wimd.application;
 
 /**
  * Created by 15692 on 23/06/16.

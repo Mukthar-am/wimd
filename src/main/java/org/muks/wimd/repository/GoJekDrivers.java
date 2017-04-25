@@ -71,13 +71,17 @@ public class GoJekDrivers {
         return null;
     }
 
-    public Driver updateDriverLocation(int driverId) {
-
-//        this.DRIVER_LISTING.put(driverId, driverUpdate);
-
-        return null;
+    /**
+     * @param driver
+     */
+    public void updateDriverLocation(Driver driver) {
+        this.DRIVER_LISTING.put(driver.getId(), driver);
+        System.out.println(this.DRIVER_LISTING.get(driver.getId()));
     }
 
+    /**
+     * @return
+     */
     public Map<Integer, Driver> getDriverListing() { return this.DRIVER_LISTING; }
 
     public int getCapacity() { return this.CAPACITY; }

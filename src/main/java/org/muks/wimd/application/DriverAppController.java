@@ -24,8 +24,9 @@ public class DriverAppController {
                                         @RequestHeader("car-make") String carMake,
                                         @RequestHeader("car-model") String carModel,
                                         @RequestHeader("color") String carColor,
-                                        @RequestHeader("registration") String registration,
-                                        @RequestHeader("segment") String segment) {
+                                        @RequestHeader("registration") String carRegistration,
+                                        @RequestHeader("segment") String carSegment,
+                                        @RequestHeader("name") String driverName) {
 
         /** Check if the driver ID is valid, ranging between 1 - 50,000*/
         if (id >= 1 && id <= 50000){
@@ -43,10 +44,13 @@ public class DriverAppController {
                 else {    /** all good, go ahead an note the location of the driver */
                     GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
 
-//                    if (segment.equalsIgnoreCase("luxury"))
-//                    Segments segment =
-//                    Vehicle vehicle = new Car(carMake, carModel, carColor, registration, )
-//                    Driver driverUpdate = new Driver();
+                    Driver driverUpdate =
+                            new Driver(
+                                        id,
+                                        driverName,
+                                        new Car(carMake, carModel, carColor, carRegistration, Utils.getSegment(carSegment))
+                    );
+                    goJekDrivers.updateDriverLocation(driverUpdate);
 
                     return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.OK);
                 }
@@ -56,7 +60,6 @@ public class DriverAppController {
                 e.printStackTrace();
                 return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.BAD_REQUEST);
             }
-
 
 
         } else {

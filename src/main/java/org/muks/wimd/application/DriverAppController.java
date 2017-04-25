@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 public class DriverAppController {
 
     @RequestMapping( value = "/drivers/{id}/location", method = RequestMethod.PUT, headers = "Accept=application/json" )
-    public ResponseEntity driversTracker(@PathVariable("id") int id, @RequestBody String json) {
+    public ResponseEntity driversTracker(
+                                        @PathVariable("id") int id, @RequestBody String json) {
 
         System.out.println("ID: " + id);
         System.out.println("# Driver app: " + json.toString());

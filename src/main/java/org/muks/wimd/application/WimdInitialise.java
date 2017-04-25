@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebListener;
  */
 
 @WebListener
-public class TasInitialise implements ServletContextListener {
+public class WimdInitialise implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

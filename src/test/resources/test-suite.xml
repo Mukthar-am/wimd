@@ -6,12 +6,7 @@
     </listeners>
     <test name="Regression Test Suite">
         <packages>
-            <package name="com.muks.employee.emailer"/>
-            <package name="com.muks.employee.employee"/>
+            <package name="org.muks.wimd.repository"/>
         </packages>
-
-        <!--<classes>-->
-        <!--<class name="EmployeeTests"/>-->
-        <!--</classes>-->
     </test>
 </suite>

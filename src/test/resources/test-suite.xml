@@ -6,7 +6,9 @@
     </listeners>
     <test name="Regression Test Suite">
         <packages>
+            <package name="org.muks.wimd.dao"/>
             <package name="org.muks.wimd.repository"/>
+            <package name="org.muks.wimd.request"/>
         </packages>
     </test>
 </suite>

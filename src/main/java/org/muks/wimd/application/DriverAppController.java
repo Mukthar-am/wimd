@@ -23,6 +23,10 @@ public class DriverAppController {
             try {
                 JsonNode requestJsonNode = Utils.convertToJsonNode(json);
 
+
+//                if () {
+//                    return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.UNPROCESSABLE_ENTITY);
+//                }
             } catch (Exception e) {
                 /** if the request json is invalid, return error as Bad-Request */
                 e.printStackTrace();

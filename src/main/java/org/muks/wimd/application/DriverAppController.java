@@ -1,7 +1,13 @@
 package org.muks.wimd.application;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.muks.wimd.dao.request.RequestJson;
 import org.muks.wimd.dao.response.DriverLocationResponse;
+import org.muks.wimd.dao.transportation.Car;
+import org.muks.wimd.dao.transportation.Driver;
+import org.muks.wimd.dao.transportation.Segments;
+import org.muks.wimd.dao.transportation.Vehicle;
+import org.muks.wimd.repository.GoJekDrivers;
 import org.muks.wimd.utils.Utils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +19,13 @@ public class DriverAppController {
 
     @RequestMapping( value = "/drivers/{id}/location", method = RequestMethod.PUT, headers = "Accept=application/json" )
     public ResponseEntity driversTracker(
-                                        @PathVariable("id") int id, @RequestBody String json) {
+                                        @PathVariable("id") int id,
+                                        @RequestBody String json,
+                                        @RequestHeader("car-make") String carMake,
+                                        @RequestHeader("car-model") String carModel,
+                                        @RequestHeader("color") String carColor,
+                                        @RequestHeader("registration") String registration,
+                                        @RequestHeader("segment") String segment) {
 
         /** Check if the driver ID is valid, ranging between 1 - 50,000*/
         if (id >= 1 && id <= 50000){
@@ -21,24 +33,37 @@ public class DriverAppController {
             System.out.println("Request Json: " + json);
 
             try {
-                JsonNode requestJsonNode = Utils.convertToJsonNode(json);
+                RequestJson requestJson = new RequestJson( Utils.convertToJsonNode(json) );
 
+                if (!requestJson.isLatitudeInRange()
+                        || !requestJson.isLongitudeInRange()) {
+                    return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.UNPROCESSABLE_ENTITY);
 
-//                if () {
-//                    return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.UNPROCESSABLE_ENTITY);
-//                }
+                }
+                else {    /** all good, go ahead an note the location of the driver */
+                    GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
+
+//                    if (segment.equalsIgnoreCase("luxury"))
+//                    Segments segment =
+//                    Vehicle vehicle = new Car(carMake, carModel, carColor, registration, )
+//                    Driver driverUpdate = new Driver();
+
+                    return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.OK);
+                }
+
             } catch (Exception e) {
                 /** if the request json is invalid, return error as Bad-Request */
                 e.printStackTrace();
                 return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.BAD_REQUEST);
             }
 
-            return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.OK);
+
 
         } else {
             return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.FORBIDDEN);
         }
     }
+
 
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.muks.wimd.dao.transportation.Segments;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,4 +65,25 @@ public class Utils {
     }
 
 
+    public static Segments getSegment(String segment) {
+        //LUXURY, SEDAN, MINI, MICRO, AUTO
+        if (segment.equalsIgnoreCase("luxury")) {
+            return Segments.LUXURY;
+        }
+        else if (segment.equalsIgnoreCase("sedan")) {
+            return Segments.SEDAN;
+        }
+        else if (segment.equalsIgnoreCase("mini")) {
+            return Segments.MINI;
+        }
+        else if (segment.equalsIgnoreCase("micro")) {
+            return Segments.MICRO;
+        }
+        else if (segment.equalsIgnoreCase("auto")) {
+            return Segments.AUTO;
+        }
+
+        return null;
+
+    }
 }

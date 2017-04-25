@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
  */
 
 @JsonSerialize
-public class DriverResponse extends JsonResponse {
+public class DriverLocationResponse extends JsonResponse {
     JSONObject response = new JSONObject();
 
     @Override

@@ -1,5 +1,4 @@
-package org.muks.wimd.repository;
-
+package org.muks.wimd.transportation;
 
 import org.muks.wimd.dao.transportation.Car;
 import org.muks.wimd.dao.transportation.Segments;
@@ -8,11 +7,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Created by 15692 on 23/06/16.
+ * Created by 300000511 on 26/04/17.
  */
-
-
-public class VehicleTests {
+public class DriverAndVehicleTests {
 
     @Test()
     void testCarRegistractionProps() {
@@ -35,4 +32,20 @@ public class VehicleTests {
 
     }
 
+
+    @Test
+    public void getDriverByIdTests() {
+
+    }
+
+    @Test
+    public void updateDriverTests() {
+
+    }
+
+    @Test
+    public void getDriverMaxCapacityTests() {
+
+
+    }
 }

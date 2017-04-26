@@ -9,6 +9,7 @@
             <package name="org.muks.wimd.dao"/>
             <package name="org.muks.wimd.repository"/>
             <package name="org.muks.wimd.request"/>
+            <package name="org.muks.wimd.transportation"/>
         </packages>
     </test>
 </suite>

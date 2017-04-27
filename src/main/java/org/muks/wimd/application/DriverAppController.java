@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 
 @RestController
 public class DriverAppController {
@@ -68,6 +70,18 @@ public class DriverAppController {
     }
 
 
+    /**
+     * @return
+     */
+    @RequestMapping( value = "/drivers", method = RequestMethod.GET, headers = "Accept=application/json" )
+    public ResponseEntity findDriver(@RequestParam("latitude") BigDecimal latitude,
+                                     @RequestParam("longitude") BigDecimal longitude,
+                                     @RequestParam("accuracy") double accuracy) {
 
+        System.out.println("Latitude: " + latitude + ", Longitude: " + longitude + ", Accuracy: " + accuracy);
+
+        return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.OK);
+
+    }
 
 }

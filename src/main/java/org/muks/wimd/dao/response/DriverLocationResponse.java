@@ -13,10 +13,16 @@ import org.json.simple.JSONObject;
 public class DriverLocationResponse extends JsonResponse {
     JSONObject response = new JSONObject();
 
-    @Override
-    public String getResponse() {
-        return response.toJSONString();
+    public DriverLocationResponse() {
+        this.response.put("message", "");
     }
 
+    public DriverLocationResponse(String message) {
+        this.response.put("message", message);
+    }
 
+    @Override
+    public String getResponse() {
+        return this.response.get("message").toString();
+    }
 }

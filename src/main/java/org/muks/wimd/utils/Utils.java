@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.muks.wimd.dao.request.RequestJson;
 import org.muks.wimd.dao.transportation.Segments;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * Created by 300000511 on 26/04/17
@@ -18,10 +16,8 @@ import java.nio.file.Paths;
 public class Utils {
 
     public static JsonNode convertToJsonNode(String inputString) throws Exception {
-        System.out.println("# Converting input file to JsonNode.");
-
         try {
-            isJsonValid(inputString);
+            isValidJson(inputString);
         } catch (Exception e) {
             throw new Exception(e);
         }
@@ -49,7 +45,7 @@ public class Utils {
      * @return
      * @throws IOException
      */
-    public static boolean isJsonValid(String jsonInString) throws Exception {
+    public static boolean isValidJson(String jsonInString) throws Exception {
         final ObjectMapper mapper = new ObjectMapper();
         boolean isValid = true;
 
@@ -85,5 +81,33 @@ public class Utils {
 
         return null;
 
+    }
+
+
+    /**
+     * Find if the driver is valid based on the driver ID range check between 1 (inclusive) and 50000 (inclusive)
+     * @param driverId
+     * @return
+     */
+    public static boolean isValidDriver(int driverId) {
+        /** Check if the driver ID is valid, ranging between 1 - 50,000*/
+        if (driverId >= 1 && driverId <= 50000) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Find if the incoming request is valid, based on its raging beging between +/-90 (inclusive)
+     * @param inputRequestJson   - input json string
+     * @return boolean
+     */
+    public static boolean isValidRequest(String inputRequestJson) {
+
+
+
+        return true;
     }
 }

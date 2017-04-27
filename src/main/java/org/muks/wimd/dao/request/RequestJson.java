@@ -5,41 +5,62 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.math.BigDecimal;
 
 /**
- * Created by 300000511 on 26/04/17.
+ * Created by 300000511 on 26/04/17
+ *
+ *  - Request pojo with some of the validations done
  */
 public class RequestJson {
-    //"latitude": 12.97161923, "longitude": 77.59463452, "accuracy": 0.7
+    private BigDecimal rangeMin = new BigDecimal(-90);
+    private BigDecimal rangeMax = new BigDecimal(90);
 
-    BigDecimal rangeMin = new BigDecimal(-90);
-    BigDecimal rangeMax = new BigDecimal(90);
+    private BigDecimal latitude = new BigDecimal(0);
+    private BigDecimal longitude = new BigDecimal(0);
+    private double accuracy = 0.7;
 
-    BigDecimal latitude = new BigDecimal(0);
-    BigDecimal longitude = new BigDecimal(0);
-    double accuracy = 0.7;
+    private boolean isLatitudeInRange = false;
+    private boolean isLongitudeInRange = false;
 
-    boolean isLatitudeInRange = false;
-    boolean isLongitudeInRange = false;
+    private boolean isValidRequest = false;
 
-    public RequestJson(JsonNode requestJsonNode) {
-        this.latitude = requestJsonNode.get("latitude").decimalValue();
-        this.longitude = requestJsonNode.get("longitude").decimalValue();
-        this.accuracy = requestJsonNode.get("accuracy").asDouble();
+    /**
+     * Having parse method instead of overloading class constructor and is a bad practise to implement too much of logic within constructor
+     * @param requestJsonNode
+     * @return
+     */
+    public RequestJson parse(JsonNode requestJsonNode) {
+        RequestJson requestJson = new RequestJson();
 
-        if (this.latitude.compareTo(this.rangeMin) == 1
-                && this.latitude.compareTo(this.rangeMax) == -1) {
-            this.isLatitudeInRange = true;
+        requestJson.latitude = requestJsonNode.get("latitude").decimalValue();
+        requestJson.longitude = requestJsonNode.get("longitude").decimalValue();
+        requestJson.accuracy = requestJsonNode.get("accuracy").asDouble();
+
+
+        /** Check on the range being within +/- 90 (inclusive) */
+        if (requestJson.latitude.compareTo(requestJson.rangeMin) == 1
+                && requestJson.latitude.compareTo(requestJson.rangeMax) == -1) {
+            requestJson.isLatitudeInRange = true;
         }
 
-        if (this.longitude.compareTo(this.rangeMin) == 1
-                && this.longitude.compareTo(this.rangeMax) == -1) {
-            this.isLongitudeInRange = true;
+        /** Check on the range being within +/- 90 (inclusive) */
+        if (requestJson.longitude.compareTo(requestJson.rangeMin) == 1
+                && requestJson.longitude.compareTo(requestJson.rangeMax) == -1) {
+            requestJson.isLongitudeInRange = true;
         }
+
+
+        if ( (requestJson.isLatitudeInRange) && (requestJson.isLongitudeInRange) ) {
+            requestJson.isValidRequest = true;
+        }
+
+        return requestJson;
     }
 
 
-    public boolean isLatitudeInRange() { return this.isLatitudeInRange; }
+    public boolean getIsLatitudeInRange() { return this.isLatitudeInRange; }
 
-    public boolean isLongitudeInRange() { return this.isLongitudeInRange; }
+    public boolean getIsLongitudeInRange() { return this.isLongitudeInRange; }
+
+    public boolean isRequestValid() { return this.isValidRequest; }
 
     public String toString() {
         return "\"latitude\":" + this.latitude + ", \"" + this.longitude + "\", \"accuracy\": " + this.accuracy;

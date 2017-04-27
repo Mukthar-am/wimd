@@ -33,7 +33,9 @@ public class GoJekDrivers {
         return instance;
     }
 
-
+    /**
+     * - initialize
+     */
     public void init() {
         if (DRIVER_LISTING.size() == 0) {
 
@@ -60,8 +62,8 @@ public class GoJekDrivers {
 
 
     /**
-     * @param driverId
-     * @return
+     * @param driverId - int
+     * @return - driver pojo
      */
     public Driver getDriverById(int driverId) {
         if (driverId <= this.CAPACITY) {
@@ -72,11 +74,11 @@ public class GoJekDrivers {
     }
 
     /**
-     * @param driver
+     * @param driver - Driver pojo
      */
     public void updateDriverLocation(Driver driver) {
         this.DRIVER_LISTING.put(driver.getId(), driver);
-        System.out.println(this.DRIVER_LISTING.get(driver.getId()));
+        System.out.println("uUpdating driver infomration: " + this.DRIVER_LISTING.get(driver.getId()));
     }
 
     /**
@@ -84,5 +86,15 @@ public class GoJekDrivers {
      */
     public Map<Integer, Driver> getDriverListing() { return this.DRIVER_LISTING; }
 
+    /**
+     * - get capacity
+     * @return int
+     */
     public int getCapacity() { return this.CAPACITY; }
+
+
+    public void getDriversCloseby() {
+
+    }
+
 }

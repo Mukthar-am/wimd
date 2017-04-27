@@ -28,8 +28,7 @@ public class Driver {
         StringBuilder output = new StringBuilder("[");
         output.append("Id: " + id + ", ");
         output.append("Name: " + name + ", ");
-        output.append("Vehicle: " + vehicle.toString() + ", ");
-
+        output.append("Vehicle: " + vehicle.toString() + "]");
         return output.toString();
     }
 }

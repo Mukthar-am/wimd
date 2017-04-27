@@ -112,6 +112,12 @@ public class GoJekDrivers {
                 ToDo: Iterate by the drives and check on which driver is close by the main digit of lat-lon and run distance calculator
              */
 
+            /*
+             *  - Iterate through the first 10 (value of limit), who do match the whole number of the lat-lon
+              * - Based on the matched 10, find the closest one.
+              * - If someone falls within the radius, return else run the same above iteration for next 10 matching drivers
+             */
+
 
         } catch (Exception e) {
             e.printStackTrace();

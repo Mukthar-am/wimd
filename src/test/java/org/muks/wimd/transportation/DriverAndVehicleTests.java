@@ -102,7 +102,7 @@ public class DriverAndVehicleTests {
 
             double distance = new DistanceCalculator().calculate(lat1, longi1, lat2, longi2, "meters");
             System.out.println("Distance: "+ distance);
-            Assert.assertEquals(866345.231661696, distance);
+            Assert.assertEquals(distance, 866345.231661696);
 
         } catch (Exception e) {
             e.printStackTrace();

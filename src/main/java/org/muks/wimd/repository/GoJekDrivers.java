@@ -1,11 +1,14 @@
 package org.muks.wimd.repository;
 
 import org.muks.wimd.dao.geo.Location;
+import org.muks.wimd.dao.request.RequestJson;
 import org.muks.wimd.dao.transportation.Car;
 import org.muks.wimd.dao.transportation.Driver;
 import org.muks.wimd.dao.transportation.Segments;
 import org.muks.wimd.dao.transportation.Vehicle;
+import org.muks.wimd.utils.DistanceCalculator;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,8 +102,20 @@ public class GoJekDrivers {
     }
 
 
-    public void getDriversCloseby() {
+    public void getDriversCloseby(RequestJson inputRequestJson) {
+        try {
+            BigDecimal inLat = inputRequestJson.getLatitude();
+            BigDecimal inLon = inputRequestJson.getLongitude();
 
+
+            /*
+                ToDo: Iterate by the drives and check on which driver is close by the main digit of lat-lon and run distance calculator
+             */
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

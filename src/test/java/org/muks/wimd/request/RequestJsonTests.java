@@ -6,6 +6,8 @@ import org.muks.wimd.utils.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
+
 /**
  * Created by 300000511 on 26/04/17.
  */
@@ -108,6 +110,27 @@ public class RequestJsonTests {
             RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(json));
             Assert.assertEquals(false, requestJson.isRequestValid());
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void TestGetLatitudeLongitude() {
+        String json = "{" +
+                "\"latitude\": 121.97161923," +
+                "\"longitude\": 67.59463452," +
+                "\"accuracy\": 0.7" +
+                "}";
+
+
+        try {
+            RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(json));
+            BigDecimal lat = requestJson.getLatitude();
+            BigDecimal longi = requestJson.getLongitude();
+
+            Assert.assertEquals(1, lat.compareTo(longi));
 
         } catch (Exception e) {
             e.printStackTrace();

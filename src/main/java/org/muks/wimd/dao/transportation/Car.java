@@ -44,7 +44,7 @@ public class Car extends Vehicle {
         printCar.append("Model: " + model + ", ");
         printCar.append("Color: " + color + ", ");
         printCar.append("Registration: " + registration + ", ");
-        printCar.append("Segment: " + segment + ", ");
+        printCar.append("Segment: " + segment);
         printCar.append(")");
 
         return printCar.toString();

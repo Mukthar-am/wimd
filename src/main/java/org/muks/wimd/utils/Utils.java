@@ -98,16 +98,4 @@ public class Utils {
         return false;
     }
 
-
-    /**
-     * Find if the incoming request is valid, based on its raging beging between +/-90 (inclusive)
-     * @param inputRequestJson   - input json string
-     * @return boolean
-     */
-    public static boolean isValidRequest(String inputRequestJson) {
-
-
-
-        return true;
-    }
 }

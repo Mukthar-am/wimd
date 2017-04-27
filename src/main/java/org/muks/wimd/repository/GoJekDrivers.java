@@ -1,5 +1,6 @@
 package org.muks.wimd.repository;
 
+import org.muks.wimd.dao.geo.Location;
 import org.muks.wimd.dao.transportation.Car;
 import org.muks.wimd.dao.transportation.Driver;
 import org.muks.wimd.dao.transportation.Segments;
@@ -54,7 +55,8 @@ public class GoJekDrivers {
                 else if (i > 30000 && i <= 50000)
                     vehicle = new Car("Mercedes", "C-Class", "White", ("KA-01 HA" + i), Segments.LUXURY);
 
-                this.DRIVER_LISTING.put(i, new Driver(i, "Driver # " + i, vehicle));
+
+                this.DRIVER_LISTING.put(i, new Driver(i, "Driver # " + i, vehicle, new Location()));
             }
 
         }
@@ -91,6 +93,10 @@ public class GoJekDrivers {
      * @return int
      */
     public int getCapacity() { return this.CAPACITY; }
+
+    public void setCapacity(int capacity) {
+        this.CAPACITY = capacity;
+    }
 
 
     public void getDriversCloseby() {

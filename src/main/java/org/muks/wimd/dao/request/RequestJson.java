@@ -62,6 +62,12 @@ public class RequestJson {
 
     public boolean isRequestValid() { return this.isValidRequest; }
 
+    public BigDecimal getLatitude() { return this.latitude; }
+
+    public BigDecimal getLongitude() { return this.longitude; }
+
+    public double getAccuracy() { return this.accuracy; }
+
     public String toString() {
         return "\"latitude\":" + this.latitude + ", \"" + this.longitude + "\", \"accuracy\": " + this.accuracy;
     }

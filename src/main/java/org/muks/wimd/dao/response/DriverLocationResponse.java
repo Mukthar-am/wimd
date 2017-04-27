@@ -1,6 +1,7 @@
 package org.muks.wimd.dao.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -14,15 +15,29 @@ public class DriverLocationResponse extends JsonResponse {
     JSONObject response = new JSONObject();
 
     public DriverLocationResponse() {
-        this.response.put("message", "");
+        this.response.put("message", new JSONObject());
     }
 
-    public DriverLocationResponse(String message) {
-        this.response.put("message", message);
+    public void pushResponseError(String error) {
+        if (!this.response.containsKey("errors")) {
+            JSONArray responseErrors = new JSONArray();
+            responseErrors.add(error);
+
+            JSONObject errorsJsonObject = new JSONObject();
+            errorsJsonObject.put("errors", responseErrors);
+
+            this.response.put("errors", errorsJsonObject);
+
+        } else {
+            JSONArray errorsArray = (JSONArray) this.response.get("errors");
+            errorsArray.add(error);
+
+        }
     }
 
     @Override
-    public String getResponse() {
-        return this.response.get("message").toString();
+    public JSONObject getResponse() {
+        return this.response;
     }
+
 }

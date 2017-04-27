@@ -1,5 +1,6 @@
 package org.muks.wimd.application;
 
+import org.muks.wimd.dao.geo.Location;
 import org.muks.wimd.dao.request.RequestJson;
 import org.muks.wimd.dao.response.DriverLocationResponse;
 import org.muks.wimd.dao.transportation.Car;
@@ -26,6 +27,8 @@ public class DriverAppController {
                                          @RequestHeader("segment") String carSegment,
                                          @RequestHeader("name") String driverName) {
 
+        DriverLocationResponse driverLocationResponse = new DriverLocationResponse();
+
         /** Check if the driver ID is valid, ranging between 1 - 50,000*/
         if (Utils.isValidDriver(id)) {
             System.out.println("Driver is valid.");
@@ -34,35 +37,45 @@ public class DriverAppController {
                 RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(inputRequestJson));
 
                 if (!requestJson.isRequestValid()) {
+                    driverLocationResponse.pushResponseError("Latitude should be between +/- 90");
+                    System.out.println("invalid json req");
                     return new ResponseEntity(
-                            new DriverLocationResponse("{\"errors\": [\"Latitude should be between +/- 90\"]}").getResponse(),
-                            HttpStatus.UNPROCESSABLE_ENTITY);
+                            driverLocationResponse.getResponse().get("errors").toString(), HttpStatus.UNPROCESSABLE_ENTITY);
 
-                }
-                else {    /** all good, go ahead an note the location of the driver */
+                } else {    /** all good, go ahead an note the location of the driver */
                     GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
 
+                    // ToDo: Scope of enhancement here, updateDriverLocation, should be just by driver-id
+                    Location updatedLocation =
+                            new Location(requestJson.getLatitude(),
+                                        requestJson.getLongitude(),
+                                        requestJson.getAccuracy());
                     Driver driverUpdate =
                             new Driver(
                                     id,
                                     driverName,
-                                    new Car(carMake, carModel, carColor, carRegistration, Utils.getSegment(carSegment))
+                                    new Car(carMake, carModel, carColor, carRegistration, Utils.getSegment(carSegment)),
+                                    updatedLocation
                             );
+
                     goJekDrivers.updateDriverLocation(driverUpdate);
 
-                    return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.OK);
+                    return new ResponseEntity(
+                            driverLocationResponse.getResponse().get("message").toString(), HttpStatus.OK);
                 }
 
             } catch (Exception e) {
                 /** if the request json is invalid, return error as Bad-Request */
                 e.printStackTrace();
-                return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity(
+                        driverLocationResponse.getResponse().get("message").toString(), HttpStatus.BAD_REQUEST);
 
             }
 
         } else {
             System.out.println("Driver IS NOT valid");
-            return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.FORBIDDEN);
+            return new ResponseEntity(
+                    driverLocationResponse.getResponse().get("message").toString(), HttpStatus.FORBIDDEN);
         }
     }
 
@@ -95,23 +108,33 @@ public class DriverAppController {
         System.out.println("Input Request: " + inputRequestJson.toString());
 
         /** {"errors": ["Latitude should be between +/- 90"]} */
-        if (Utils.isValidRequest(inputRequestJson.toString())) {   /** all good, go ahead an note the location of the driver */
-            GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
+        DriverLocationResponse driverLocationResponse = new DriverLocationResponse();
+        try {
+            RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(inputRequestJson.toString()));
 
-            /*
-                Response: json array
-                [
-                    {id: 42, latitude: 12.97161923, longitude: 77.59463452, distance: 123},
-                    {id: 84, latitude: 12.97161923, longitude: 77.59463452, distance: 123}
-                ]
+            if (!requestJson.isRequestValid()) {
+                driverLocationResponse.pushResponseError("Latitude should be between +/- 90");
+                System.out.println("invalid json req");
+                return new ResponseEntity(
+                        driverLocationResponse.getResponse().get("errors").toString(), HttpStatus.UNPROCESSABLE_ENTITY);
 
-             */
+            } else {    /** all good, go ahead an note the location of the driver */
+                GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
 
-            return new ResponseEntity(new DriverLocationResponse("").getResponse(), HttpStatus.OK);
 
-        } else {    /** if the request json is invalid, return error as Bad-Request */
-            return new ResponseEntity(new DriverLocationResponse().getResponse(), HttpStatus.BAD_REQUEST);
+
+                return new ResponseEntity(
+                        driverLocationResponse.getResponse().get("message").toString(), HttpStatus.OK);
+            }
+
+        } catch (Exception e) {
+            /** if the request json is invalid, return error as Bad-Request */
+            e.printStackTrace();
+            return new ResponseEntity(
+                    driverLocationResponse.getResponse().get("message").toString(), HttpStatus.BAD_REQUEST);
+
         }
+
 
     }
 

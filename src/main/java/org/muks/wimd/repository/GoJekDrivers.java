@@ -95,12 +95,12 @@ public class GoJekDrivers {
      */
     public void updateDriverLocation(Driver driver) {
         this.DRIVER_LISTING.put(driver.getId(), driver);
-        System.out.println("uUpdating driver infomration: " + this.DRIVER_LISTING.get(driver.getId()));
+        System.out.println("uUpdating driver information: " + this.DRIVER_LISTING.get(driver.getId()));
     }
 
     public void updateDriverLocation(Driver driver, Location location) {
         this.DRIVER_LISTING.put(driver.getId(), driver);
-        System.out.println("uUpdating driver infomration: " + this.DRIVER_LISTING.get(driver.getId()));
+        System.out.println("uUpdating driver information: " + this.DRIVER_LISTING.get(driver.getId()));
         driver.setLocation(location);
     }
 
@@ -126,23 +126,24 @@ public class GoJekDrivers {
 
 
     public JSONArray getDriversCloseby(RequestJson inputRequestJson) {
+        System.out.println("Fetching drivers, closeby...");
 
-        BigDecimal inLat = inputRequestJson.getLatitude();
-        BigDecimal inLon = inputRequestJson.getLongitude();
+        Location location = inputRequestJson.getLocation();
+        BigDecimal inLat = location.getLatitude();
+        BigDecimal inLon = location.getLongitude();
+
 
         KD2DTree kdTree = getKdTree();
-        System.out.println("Inorder of 2D Kd tree: ");
         double a[] = new double[2];
         a[0] = inLat.doubleValue();
         a[1] = inLon.doubleValue();
 
         KD2DNode node = kdTree.find_nearest(a);
-        System.out.println("+++ " + node.toString() + ", Driver: " + node.driverId);
+        System.out.println("Driver details found: " + node.toString() + ", Driver: " + node.driverId);
 
 
         Driver driver = this.DRIVER_LISTING.get(node.driverId);
         DriverLocationResponse driverLocationResponse = new DriverLocationResponse();
-        driverLocationResponse.pushResponseError("Latitude should be between +/- 90");
 
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("id", driver.getId());
@@ -154,34 +155,23 @@ public class GoJekDrivers {
 
         jsonObj.put("distance", distance);
 
-
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(0, jsonObj);
 
-        driverLocationResponse.addDriversListing(jsonArray);
+        driverLocationResponse.setAvailableDrivers(jsonArray);
 
-        return driverLocationResponse.getDriversListing();
-        
-
-            /*
-                ToDo: Iterate by the drives and check on which driver is close by the main digit of lat-lon and run distance calculator
-             */
-            /*
-             *  - Iterate through the first 10 (value of limit), who do match the whole number of the lat-lon
-              * - Based on the matched 10, find the closest one.
-              * - If someone falls within the radius, return else run the same above iteration for next 10 matching drivers
-             */
-
-
+        return driverLocationResponse.getAvailableDrivers();
     }
 
 
     public KD2DTree getKdTree() {
-        for (int i = 1; i < 10; i++) {
+        System.out.println("Total nodes: " + this.DRIVER_LISTING.size());
+
+        for (int i = 1; i <= this.CAPACITY; i++) {
             Driver driver = this.DRIVER_LISTING.get(i);
             Location location = driver.getLocation();
 
-            double x[] = new double[2];
+            double[] x = new double[2];
             x[0] = location.getLatitude().doubleValue();
             x[1] = location.getLongitude().doubleValue();
             kdTree.add(x, i);

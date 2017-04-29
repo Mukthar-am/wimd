@@ -18,10 +18,15 @@ public class Location {
     }
 
 
-    public Location(BigDecimal lat, BigDecimal longi, double acc) {
+    public Location(BigDecimal lat, BigDecimal lon, double acc) {
         this.latitude = lat;
-        this.longitude = longi;
+        this.longitude = lon;
         this.accuracy = acc;
+    }
+
+    public Location(BigDecimal lat, BigDecimal lon) {
+        this.latitude = lat;
+        this.longitude = lon;
     }
 
     public BigDecimal getLatitude() { return this.latitude; }

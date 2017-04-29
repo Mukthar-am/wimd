@@ -40,8 +40,7 @@ public class RequestJson {
 
         this.location
                 = new Location(requestJsonNode.get("latitude").decimalValue(),
-                requestJsonNode.get("longitude").decimalValue(),
-                requestJsonNode.get("accuracy").asDouble());
+                requestJsonNode.get("longitude").decimalValue() );
 
 
         /** Check on the range being within +/- 90 (inclusive) */

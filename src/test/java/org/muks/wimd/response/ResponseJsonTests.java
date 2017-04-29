@@ -56,9 +56,9 @@ public class ResponseJsonTests {
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(0, jsonObj);
 
-        driverLocationResponse.addDriversListing(jsonArray);
+        driverLocationResponse.setAvailableDrivers(jsonArray);
 
-        System.out.println(driverLocationResponse.getDriversListing().toString());
+        System.out.println(driverLocationResponse.getAvailableDrivers().toString());
         new DistanceCalculator().calculate();
 
         String expected = "[{\"distance\":123,\"latitude\":12.97161923,\"id\":1,\"longitude\":77.59463452}]";

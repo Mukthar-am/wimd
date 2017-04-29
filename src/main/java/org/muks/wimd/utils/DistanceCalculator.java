@@ -76,7 +76,4 @@ public class DistanceCalculator {
         return distance(lat1.doubleValue(), longi1.doubleValue(), lat2.doubleValue(), longi2.doubleValue(), "meters");
     }
 
-    public static void main(String[] args) {
-        new DistanceCalculator().calculate();
-    }
 }

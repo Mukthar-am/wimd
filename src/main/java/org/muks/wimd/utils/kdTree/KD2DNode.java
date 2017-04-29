@@ -1,7 +1,9 @@
 package org.muks.wimd.utils.kdTree;
 
 /**
- * Created by 300000511 on 29/04/17.
+ * Created by 300000511 on 29/04/17
+ *
+ *  - KDNode class
  */
 public class KD2DNode {
     public int driverId;

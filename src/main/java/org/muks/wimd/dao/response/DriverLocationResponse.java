@@ -41,16 +41,16 @@ public class DriverLocationResponse extends JsonResponse {
      *
      * @param responseArray - JSONArray with driver response
      */
-    public void addDriversListing(JSONArray responseArray) {
+    public void setAvailableDrivers(JSONArray responseArray) {
         this.drivers = responseArray;
     }
 
 
     /**
-     *
      * @return JSONArray
      */
-    public JSONArray getDriversListing() { return this.drivers; }
+    public JSONArray getAvailableDrivers() { return this.drivers; }
+
 
     @Override
     public JSONObject getResponse() {

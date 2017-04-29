@@ -1,7 +1,8 @@
 package org.muks.wimd.utils.kdTree;
 
 /**
- * Created by 300000511 on 29/04/17.
+ * Created by 300000511 on 29/04/17
+ *   KDTree traversals and other logic
  */
 public class KD2DTree {
     KD2DNode Root;

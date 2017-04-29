@@ -1,5 +1,6 @@
 package org.muks.wimd.application;
 
+import org.json.simple.JSONObject;
 import org.muks.wimd.dao.geo.Location;
 import org.muks.wimd.dao.request.RequestJson;
 import org.muks.wimd.dao.response.DriverLocationResponse;
@@ -50,6 +51,9 @@ public class DriverAppController {
                             new Location(requestJson.getLatitude(),
                                         requestJson.getLongitude(),
                                         requestJson.getAccuracy());
+
+                    System.out.println("Updating driver infomration...");
+
                     Driver driverUpdate =
                             new Driver(
                                     id,
@@ -89,28 +93,18 @@ public class DriverAppController {
                                      @RequestParam(value = "radius", defaultValue = "500") int radius,
                                      @RequestParam(value = "limit", defaultValue = "10") int limit) {
 
-        System.out.println("Latitude: " + latitude
-                + ", Longitude: " + longitude
-                + ", Radius: " + radius
-                + ", Limit: " + limit);
+        JSONObject inputJsonObject = new JSONObject();
+        inputJsonObject.put("latitude", latitude);
+        inputJsonObject.put("longitude", longitude);
+        inputJsonObject.put("radius", radius);
+        inputJsonObject.put("limit", limit);
 
-        StringBuilder inputRequestJson = new StringBuilder("{");
-        inputRequestJson.append("\"latitude\": \"" + latitude.toString() + "\"");
-        inputRequestJson.append(",");
-        inputRequestJson.append("\"longitude\": \"" + longitude.toString() + "\"");
-        inputRequestJson.append(",");
-        inputRequestJson.append("\"radius\": \"" + String.valueOf(radius) + "\"");
-        inputRequestJson.append(",");
-        inputRequestJson.append("\"limit\": \"" + String.valueOf(limit) + "\"");
-        inputRequestJson.append("}");
-
-
-        System.out.println("Input Request: " + inputRequestJson.toString());
+        System.out.println("Input Request: " + inputJsonObject.toString());
 
         /** {"errors": ["Latitude should be between +/- 90"]} */
         DriverLocationResponse driverLocationResponse = new DriverLocationResponse();
         try {
-            RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(inputRequestJson.toString()));
+            RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(inputJsonObject.toString()));
 
             if (!requestJson.isRequestValid()) {
                 driverLocationResponse.pushResponseError("Latitude should be between +/- 90");
@@ -119,6 +113,13 @@ public class DriverAppController {
                         driverLocationResponse.getResponse().get("errors").toString(), HttpStatus.UNPROCESSABLE_ENTITY);
 
             } else {    /** all good, go ahead an note the location of the driver */
+                /**
+                 * ToDo: few enhancements here for time optimisation
+                 * 1) Let the tree not be created at every call for the driver, it the driver-nodes get updated
+                 * 2) Let the nestest_driver search not be limited to one rather multiple points
+                 * 3) Nearest search to be much more accurate in terms of distance in "meters" for each point
+                 * 4) Let the return value be a list of drivers min of 1 and a max of 10
+                 */
                 GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
 
                 return new ResponseEntity(

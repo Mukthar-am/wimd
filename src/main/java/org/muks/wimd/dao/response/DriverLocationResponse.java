@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 @JsonSerialize
 public class DriverLocationResponse extends JsonResponse {
     JSONObject response = new JSONObject();
+    JSONArray drivers = new JSONArray();
 
     public DriverLocationResponse() {
         this.response.put("message", new JSONObject());
@@ -34,6 +35,22 @@ public class DriverLocationResponse extends JsonResponse {
 
         }
     }
+
+
+    /**
+     *
+     * @param responseArray - JSONArray with driver response
+     */
+    public void addDriversListing(JSONArray responseArray) {
+        this.drivers = responseArray;
+    }
+
+
+    /**
+     *
+     * @return JSONArray
+     */
+    public JSONArray getDriversListing() { return this.drivers; }
 
     @Override
     public JSONObject getResponse() {

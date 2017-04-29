@@ -14,7 +14,7 @@ public class Location {
     public Location() {
         this.latitude = new BigDecimal(0);
         this.longitude = new BigDecimal(0);
-        this.accuracy = 0.0;
+        this.accuracy = 1.0;
     }
 
 

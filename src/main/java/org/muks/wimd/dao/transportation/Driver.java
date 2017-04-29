@@ -29,6 +29,8 @@ public class Driver {
 
     public Location getLocation() { return this.location; }
 
+    public void setLocation(Location loctn) { this.location = loctn; }
+
     public String toString() {
         StringBuilder output = new StringBuilder("[");
         output.append("Id: " + this.id + ", ");

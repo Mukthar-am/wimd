@@ -1,6 +1,9 @@
 package org.muks.wimd.response;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.muks.wimd.dao.response.DriverLocationResponse;
+import org.muks.wimd.utils.DistanceCalculator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -36,5 +39,33 @@ public class ResponseJsonTests {
         String expectedError = "{\"errors\":[\"Latitude should be between +\\/- 90\"]}";
         String actualError = driverLocationResponse.getResponse().get("errors").toString();
         Assert.assertEquals(actualError, expectedError);
+    }
+
+    @Test
+    public void TestFindDriverResponseErrors() {
+        DriverLocationResponse driverLocationResponse = new DriverLocationResponse();
+        driverLocationResponse.pushResponseError("Latitude should be between +/- 90");
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("id", 1);
+        jsonObj.put("latitude", 12.97161923);
+        jsonObj.put("longitude", 77.59463452);
+        jsonObj.put("distance", 123);
+
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(0, jsonObj);
+
+        driverLocationResponse.addDriversListing(jsonArray);
+
+        System.out.println(driverLocationResponse.getDriversListing().toString());
+        new DistanceCalculator().calculate();
+
+        String expected = "[{\"distance\":123,\"latitude\":12.97161923,\"id\":1,\"longitude\":77.59463452}]";
+        String actual = jsonArray.toJSONString();
+
+
+        Assert.assertEquals(actual, expected);
+
     }
 }

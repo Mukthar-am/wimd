@@ -72,7 +72,7 @@ public class DriverAndVehicleTests {
         goJekDrivers.setCapacity(5);
         goJekDrivers.init();
 
-        String expectedDriverString = "[Id: 1, Name: Driver # 1, Vehicle: (Make: Toyota, Model: Etios, Color: White, Registration: KA-01 HA1, Segment: SEDAN, )]";
+        String expectedDriverString = "[Id: 1, Name: Driver # 1, Vehicle: (Make: Toyota, Model: Etios, Color: White, Registration: KA-01 HA1, Segment: SEDAN), Location: [Latitude: 0, Longitude: 0, Accuracy: 1.0]]";
         Assert.assertEquals(goJekDrivers.getDriverById(1), expectedDriverString);
 
     }

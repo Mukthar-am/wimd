@@ -35,13 +35,14 @@ public class RequestJsonTests {
     }
 
     @Test
-    public void TestLatitudeAndLongitudeInRange() {
+    public void TestRequestParameters() {
         String json = "{" +
                 "\"latitude\": 12.97161923," +
                 "\"longitude\": 77.59463452," +
-                "\"accuracy\": 0.7" +
+                "\"accuracy\": 0.7," +
+                "\"radius\": 250," +
+                "\"limit\": 3" +
                 "}";
-
 
         try {
             RequestJson requestJson = new RequestJson().parse(Utils.convertToJsonNode(json));
@@ -50,6 +51,8 @@ public class RequestJsonTests {
 
             Assert.assertEquals(longitudeInRange, true);
             Assert.assertEquals(latitudeInRange, true);
+            Assert.assertEquals(requestJson.getRadius(), 250);
+            Assert.assertEquals(requestJson.getLimit(), 3);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,5 +139,7 @@ public class RequestJsonTests {
             e.printStackTrace();
         }
     }
+
+
 
 }

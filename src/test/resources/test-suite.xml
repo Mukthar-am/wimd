@@ -6,6 +6,7 @@
     </listeners>
     <test name="Regression Test Suite">
         <packages>
+            <package name="org.muks.wimd.kdTree"/>
             <package name="org.muks.wimd.repository"/>
             <package name="org.muks.wimd.request.*"/>
             <package name="org.muks.wimd.response"/>

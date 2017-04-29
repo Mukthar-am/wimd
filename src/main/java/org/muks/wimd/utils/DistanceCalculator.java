@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 public class DistanceCalculator {
 
     /**
-     *
      * @param lat1
      * @param lon1
      * @param lat2

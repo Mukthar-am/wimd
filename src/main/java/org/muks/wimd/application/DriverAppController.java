@@ -120,12 +120,9 @@ public class DriverAppController {
 
             } else {    /** all good, go ahead an note the location of the driver */
                 GoJekDrivers goJekDrivers = GoJekDrivers.getInstance();
-                goJekDrivers.getDriversCloseby(requestJson);
-
-
 
                 return new ResponseEntity(
-                        driverLocationResponse.getResponse().get("message").toString(), HttpStatus.OK);
+                        goJekDrivers.getDriversCloseby(requestJson).toString(), HttpStatus.OK);
             }
 
         } catch (Exception e) {
